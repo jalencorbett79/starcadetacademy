@@ -1,8 +1,38 @@
-.node-installation/
-
+# Dependencies
+node_modules/
+server/node_modules/
 # Generated from @osdk/create-app CLI
+
+# Build output
+dist/
+dist-ssr/
+server/dist/
+
+# Environment
+.env
+.env.local
+.env.production.local
+*.local
+server/.env
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -10,19 +40,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Testing
+coverage/
+
+# Temp
+*.tmp
+*.temp
 .pnpm-store
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.node-installation/

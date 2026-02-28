@@ -1,0 +1,188 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 20px;
+  max-width: 700px;
+  width: 100%;
+}
+
+.title {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 111, 216, 0.5);
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  color: #8892b0;
+  font-size: 0.9rem;
+  margin: 0 0 32px 0;
+}
+
+.children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.childCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(0, 0, 30, 0.7);
+  border: 2px solid;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 160px;
+  backdrop-filter: blur(4px);
+}
+
+.childCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.3);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.childInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.childName {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.6rem;
+  color: #fff;
+}
+
+.childAge {
+  font-size: 0.75rem;
+  color: #8892b0;
+}
+
+.childXP {
+  font-size: 0.7rem;
+  color: #ffea00;
+  font-family: 'Courier New', monospace;
+}
+
+.addCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  background: rgba(0, 0, 30, 0.4);
+  border: 2px dashed rgba(0, 212, 255, 0.3);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 160px;
+  min-height: 150px;
+}
+
+.addCard:hover {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.addIcon {
+  font-size: 2.5rem;
+  color: #00d4ff;
+  line-height: 1;
+}
+
+.addText {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.5rem;
+  color: #00d4ff;
+}
+
+.addForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(0, 0, 30, 0.7);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 16px;
+  min-width: 280px;
+  backdrop-filter: blur(4px);
+}
+
+.input {
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(0, 0, 40, 0.6);
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.ageSelector {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.ageBtn {
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  background: transparent;
+  color: #8892b0;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+}
+
+.ageBtn:hover {
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.ageBtnActive {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.formActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}

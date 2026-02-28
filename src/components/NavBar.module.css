@@ -1,0 +1,120 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: rgba(0, 0, 20, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.left {
+  flex: 0 0 auto;
+}
+
+.center {
+  flex: 1;
+  justify-content: center;
+}
+
+.right {
+  flex: 0 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.logoIcon {
+  font-size: 1.5rem;
+}
+
+.logoText {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.6rem;
+  color: #ff6fd8;
+  text-shadow: 0 0 10px rgba(255, 111, 216, 0.5);
+  letter-spacing: 1px;
+}
+
+.navLink {
+  background: none;
+  border: none;
+  color: #8892b0;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.navLink:hover {
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.navLink.active {
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.15);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.logoutBtn {
+  background: none;
+  border: 1px solid rgba(255, 64, 129, 0.4);
+  color: #ff4081;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 64, 129, 0.15);
+  box-shadow: 0 0 10px rgba(255, 64, 129, 0.3);
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .center {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+
+  .logoText {
+    display: none;
+  }
+
+  .navLink {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+}

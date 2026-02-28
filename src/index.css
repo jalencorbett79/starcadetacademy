@@ -1,37 +1,113 @@
+/* Star Cadet Academy - Global Styles */
+/* Retro 80s Space Theme */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
-  color: #1c2127;
-  font-family: 'Source Sans Pro', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 18px;
-  font-size: 14px;
+  /* Neon Palette */
+  --neon-pink: #ff6fd8;
+  --neon-cyan: #00d4ff;
+  --neon-green: #00e676;
+  --neon-orange: #ff9500;
+  --neon-yellow: #ffea00;
+  --neon-purple: #aa66ff;
+  --neon-red: #ff4081;
+
+  /* Space Palette */
+  --space-dark: #000010;
+  --space-mid: #0a0a2e;
+  --space-light: #0d0d35;
+  --space-surface: rgba(0, 0, 30, 0.6);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #8892b0;
+  --text-dim: #4a5568;
+
+  /* Fonts */
+  --font-retro: 'Press Start 2P', 'Courier New', monospace;
+  --font-mono: 'Courier New', monospace;
+  --font-body: 'Source Sans Pro', system-ui, -apple-system, sans-serif;
+
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  font-size: 16px;
   font-synthesis: none;
-  font-weight: 400;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root-container {
-  align-items: center;
-  display: flex;
-  flex: 1;
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--space-dark);
+  overflow-x: hidden;
 }
 
 #root {
-  margin: 0 auto;
-  max-width: 1280px;
-  padding: 2rem;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
   min-height: 100vh;
 }
 
-h2,
-h5,
-h6 {
-  font-size: 14px;
-  margin: 0;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--space-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.5);
+}
+
+/* Selection */
+::selection {
+  background: rgba(255, 111, 216, 0.3);
+  color: #fff;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Prevent text selection in game areas */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Smooth transitions globally */
+a, button {
+  transition: all 0.2s ease;
+}
+
+/* Reset default button styles */
+button {
+  font-family: inherit;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

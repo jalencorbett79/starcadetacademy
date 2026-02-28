@@ -1,0 +1,159 @@
+{
+  "app": {
+    "title": "Star Cadet Academy",
+    "subtitle": "A Bilingual Space Learning Adventure",
+    "tagline": "Explore the Galaxy. Learn Along the Way."
+  },
+  "nav": {
+    "home": "Home",
+    "missions": "Missions",
+    "profile": "My Profile",
+    "dashboard": "Parent Dashboard",
+    "logout": "Logout",
+    "language": "Español"
+  },
+  "auth": {
+    "login": "Mission Login",
+    "signup": "Enroll Cadet",
+    "email": "Parent Email",
+    "password": "Secret Code",
+    "confirmPassword": "Confirm Secret Code",
+    "parentName": "Parent Name",
+    "childName": "Cadet Name",
+    "childAge": "Cadet Age",
+    "forgotPassword": "Forgot Secret Code?",
+    "resetPassword": "Reset Secret Code",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already enrolled?",
+    "signupLink": "Enroll your Cadet",
+    "loginLink": "Log in here",
+    "verifyEmail": "Check your email to verify your account!",
+    "emailPlaceholder": "parent@email.com",
+    "passwordPlaceholder": "Enter your secret code",
+    "namePlaceholder": "Enter your name"
+  },
+  "landing": {
+    "heroTitle": "Welcome to Star Cadet Academy",
+    "heroSubtitle": "Where Little Explorers Learn Big Things",
+    "ctaButton": "Begin Your Mission",
+    "features": {
+      "reading": "Space Reading",
+      "readingDesc": "Learn letters, sounds, and words",
+      "counting": "Rocket Counting",
+      "countingDesc": "Count stars, aliens, and more",
+      "bilingual": "Two Languages",
+      "bilingualDesc": "Learn in English and Spanish"
+    }
+  },
+  "missions": {
+    "title": "Mission Control",
+    "selectAge": "Select Cadet Level",
+    "age3": "Age 3 - Beginner",
+    "age4": "Age 4 - Intermediate",
+    "age5": "Age 5 - Advanced",
+    "reading": "Reading Missions",
+    "counting": "Counting Missions",
+    "start": "Launch Mission",
+    "complete": "MISSION COMPLETE!",
+    "next": "Next Mission",
+    "retry": "Try Again",
+    "back": "Back to Base"
+  },
+  "reading": {
+    "letterMatch": "Letter Match",
+    "letterMatchDesc": "Match the letters you see!",
+    "soundMatch": "Sound Match",
+    "soundMatchDesc": "Which letter makes this sound?",
+    "cvcBuild": "Word Builder",
+    "cvcBuildDesc": "Build words letter by letter!",
+    "dragWords": "Word Catcher",
+    "dragWordsDesc": "Drag words to the right spot!",
+    "sentenceBuild": "Sentence Station",
+    "sentenceBuildDesc": "Build a sentence in space!",
+    "comprehension": "Story Stars",
+    "comprehensionDesc": "Read and answer questions!",
+    "instructions": {
+      "findLetter": "Find the letter",
+      "whatSound": "What letter makes this sound?",
+      "buildWord": "Build the word",
+      "dragWord": "Drag the word to its picture",
+      "buildSentence": "Put the words in order",
+      "readAnswer": "Read and pick the right answer"
+    }
+  },
+  "counting": {
+    "countStars": "Count the Stars",
+    "countStarsDesc": "How many stars do you see?",
+    "countAliens": "Alien Count",
+    "countAliensDesc": "Count the friendly aliens!",
+    "rocketFuel": "Rocket Fuel Math",
+    "rocketFuelDesc": "Add fuel to launch the rocket!",
+    "addBlocks": "Addition Blocks",
+    "addBlocksDesc": "Add the space blocks together!",
+    "instructions": {
+      "howMany": "How many do you see?",
+      "addFuel": "Add the fuel numbers together!",
+      "addBlocks": "What do these blocks add up to?"
+    }
+  },
+  "xp": {
+    "title": "Explorer Progress",
+    "level": "Level",
+    "xpPoints": "XP Points",
+    "nextRank": "Next Rank",
+    "ranks": {
+      "beginnerExplorer": "Beginner Explorer",
+      "spaceNewbie": "Space Newbie",
+      "spaceExpert": "Space Expert",
+      "pilotMothership": "Pilot of the Mothership"
+    }
+  },
+  "rewards": {
+    "great": "Great job, Cadet!",
+    "awesome": "Awesome work!",
+    "fantastic": "Fantastic flying!",
+    "superstar": "You're a Superstar!",
+    "keepGoing": "Keep exploring!",
+    "tryAgain": "Almost there! Try again!",
+    "missionComplete": "MISSION COMPLETE",
+    "xpEarned": "XP Earned"
+  },
+  "dashboard": {
+    "title": "Parent Mission Control",
+    "overview": "Overview",
+    "progress": "Progress",
+    "skills": "Skills",
+    "time": "Time Spent",
+    "weakAreas": "Areas to Improve",
+    "downloadReport": "Download Report",
+    "totalXP": "Total XP",
+    "missionsCompleted": "Missions Completed",
+    "streak": "Day Streak",
+    "readingSkills": "Reading Skills",
+    "countingSkills": "Counting Skills",
+    "letterRecognition": "Letter Recognition",
+    "phonics": "Phonics",
+    "sightWords": "Sight Words",
+    "counting120": "Counting 1-20",
+    "addition": "Simple Addition"
+  },
+  "profile": {
+    "title": "Cadet Profile",
+    "rank": "Rank",
+    "badges": "Badges",
+    "achievements": "Achievements",
+    "editProfile": "Edit Profile"
+  },
+  "common": {
+    "loading": "Launching...",
+    "error": "Houston, we have a problem!",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "correct": "Correct!",
+    "incorrect": "Not quite!",
+    "score": "Score"
+  }
+}

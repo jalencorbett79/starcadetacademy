@@ -1,0 +1,271 @@
+/* Shared game styles */
+
+.targetDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.targetLetter {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: #fff;
+  text-shadow:
+    0 0 15px #ff6fd8,
+    0 0 30px rgba(255, 111, 216, 0.5);
+}
+
+.soundHint {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.exampleHint {
+  font-size: 1.2rem;
+  color: #8892b0;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.optionBtn {
+  width: 100% !important;
+  min-height: 70px !important;
+  font-size: 1.2rem !important;
+}
+
+.feedback {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.65rem;
+  text-align: center;
+  animation: feedbackIn 0.3s ease-out;
+}
+
+.correct {
+  color: #00e676;
+  background: rgba(0, 230, 118, 0.1);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.incorrect {
+  color: #ff9500;
+  background: rgba(255, 149, 0, 0.1);
+  border: 1px solid rgba(255, 149, 0, 0.3);
+}
+
+.completeScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.finalScore {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: #ffea00;
+  text-shadow: 0 0 20px rgba(255, 234, 0, 0.5);
+}
+
+/* Count Stars Game */
+.emojiField {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 24px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 16px;
+  background: rgba(0, 0, 30, 0.4);
+  max-width: 400px;
+  width: 100%;
+}
+
+.countEmoji {
+  font-size: 2.5rem;
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* CVC Build Game */
+.wordSlots {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.wordSlot {
+  width: 60px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 30, 0.5);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #8892b0;
+  transition: all 0.3s ease;
+}
+
+.wordSlot.filled {
+  color: #fff;
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.wordSlot.slotCorrect {
+  border-color: #00e676;
+  color: #00e676;
+  background: rgba(0, 230, 118, 0.1);
+}
+
+.wordSlot.slotIncorrect {
+  border-color: #ff9500;
+  color: #ff9500;
+  background: rgba(255, 149, 0, 0.1);
+}
+
+/* Rocket Fuel Math Game */
+.mathDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.rocketScene {
+  margin-bottom: 8px;
+}
+
+.rocket {
+  font-size: 3rem;
+  display: inline-block;
+  transition: transform 0.6s ease;
+}
+
+.rocketLaunch {
+  animation: launch 1s ease-out forwards;
+}
+
+.fuelTanks {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fuelTank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 20px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 30, 0.5);
+}
+
+.fuelIcon {
+  font-size: 1.5rem;
+}
+
+.fuelNumber {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.mathOperator {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #ff6fd8;
+}
+
+.mathQuestion {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 2rem;
+  color: #ffea00;
+  animation: pulsate 1s ease-in-out infinite;
+}
+
+.visualBlocks {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.blockGroup {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  max-width: 150px;
+}
+
+.block {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  font-size: 0;
+  display: inline-block;
+}
+
+.blockPlus {
+  color: #8892b0;
+  font-size: 1.2rem;
+}
+
+/* Animations */
+@keyframes feedbackIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes launch {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-60px) scale(1.2);
+  }
+  100% {
+    transform: translateY(-120px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pulsate {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

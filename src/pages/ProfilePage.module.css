@@ -1,0 +1,191 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #000010 0%, #0a0a2e 50%, #000010 100%);
+  padding-top: 60px;
+}
+
+.content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  background: rgba(0, 0, 30, 0.6);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 2rem;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 111, 216, 0.3);
+}
+
+.name {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: #fff;
+  margin: 0;
+}
+
+.ageLabel {
+  color: #8892b0;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  background: rgba(0, 0, 30, 0.6);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 12px;
+}
+
+.statIcon {
+  font-size: 1.5rem;
+}
+
+.statValue {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 1rem;
+  color: #ffea00;
+}
+
+.statLabel {
+  font-size: 0.65rem;
+  color: #8892b0;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: #00d4ff;
+  margin: 0 0 16px 0;
+}
+
+.badgesSection,
+.skillsSection {
+  padding: 24px;
+  background: rgba(0, 0, 30, 0.4);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 16px;
+}
+
+.badgeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.badgeItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 2px solid;
+  border-radius: 10px;
+  background: rgba(0, 0, 30, 0.4);
+  transition: all 0.3s ease;
+}
+
+.unlocked {
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.locked {
+  opacity: 0.5;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.badgeIcon {
+  font-size: 1.5rem;
+}
+
+.badgeName {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 1px;
+}
+
+.skillBars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skillRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skillName {
+  width: 140px;
+  font-size: 0.75rem;
+  color: #8892b0;
+  text-align: right;
+}
+
+.skillBar {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.skillFill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s ease;
+}
+
+.skillValue {
+  width: 40px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #ffea00;
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .badgeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .skillName {
+    width: 100px;
+    font-size: 0.65rem;
+  }
+}

@@ -1,48 +1,97 @@
-# space-program-application
+# 🚀 Star Cadet Academy
 
-This project was generated with [`@osdk/create-app`](https://www.npmjs.com/package/@osdk/create-app) and demonstrates using the Ontology SDK package `@space-program-application/sdk` with React on top of Vite. Check out the [Vite](https://vitejs.dev/guide/) docs for further configuration.
+> **A bilingual space-themed learning game for children ages 3–5**
+>
+> _"Duolingo meets NASA Mission Control meets a 1985 arcade space station — built specifically for preschoolers."_
 
-## Developing locally
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-18-61DAFB.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6.svg)
+![Node.js](https://img.shields.io/badge/Node.js-20+-339933.svg)
 
-A `FOUNDRY_TOKEN` environment variable is required to authenticate with the NPM registry. When developing locally you may use the token used to git clone the repository (may only be valid for 7 days), or generate a longer lived token [inside Foundry](https://www.palantir.com/docs/foundry/platform-security-third-party/user-generated-tokens/#generation).
+---
 
-Install project dependencies:
+## 🌟 Features
 
-```sh
-npm install
-```
+### 🎮 Learning Modules
 
-Run the following command from the project root to start a local development server on `http://localhost:8080`:
+| Module                    | Age 3 | Age 4 | Age 5 |
+| ------------------------- | ----- | ----- | ----- |
+| **Letter Match**          | ✅    | ✅    | ✅    |
+| **Sound Match (Phonics)** | ✅    | ✅    | ✅    |
+| **CVC Word Builder**      | —     | ✅    | ✅    |
+| **Count Stars/Aliens**    | ✅    | ✅    | ✅    |
+| **Rocket Fuel Math**      | —     | ✅    | ✅    |
 
-```sh
-npm run dev
-```
+### 🌎 Bilingual Support
 
-Development configuration is stored in `.env.development`.
+- Full **English** and **Spanish** translations
+- Language-specific **phonics** data
+- Language-specific **CVC word lists**
+- Seamless **one-click toggle** between languages
+- Language preference saved per child profile
 
-In order to make API requests to Foundry, CORS must be configured for the stack to allow `http://localhost:8080` to load resources. The configured OAuth client must also allow `http://localhost:8080/auth/callback` as a redirect URL.
+### 🛸 Retro 80s Space Theme
 
-## Developing with Code Workspaces
+- **Cinematic starfield** — fly through space (Canvas API, 60fps)
+- **Neon laser celebration** animation on mission complete
+- **Pixel star burst** particle effects
+- Synthwave color palette: neon pink, cyan, green, orange
+- Retro 'Press Start 2P' pixel font
 
-Run the following command in a VS Code workspace terminal from the project root to start a development server on the workspace:
+### 🏅 XP & Rank System
 
-```sh
-npm run dev:remote
-```
+| Level | Rank                    | Badge |
+| ----- | ----------------------- | ----- |
+| 1–5   | Beginner Explorer       | 🌟    |
+| 6–10  | Space Newbie            | 🚀    |
+| 11–20 | Space Expert            | 🛸    |
+| 21+   | Pilot of the Mothership | 👨‍🚀    |
 
-Open the preview panel to see the application from the development server.
+### 📊 Parent Dashboard
 
-## Deploying
+- Skill mastery tracking (5 skill categories)
+- Weak area detection
+- Time spent per session
+- Activity history log
+- **Downloadable progress report**
+- Clean, non-arcade analytics design
 
-Foundry CI has been configured to automatically deploy production builds of this project to Foundry website hosting whenever git tags are pushed.
+### 🧠 Child Safety & Cognitive Design
 
-```
-git tag <x.y.z>
-git push origin tag <x.y.z>
-```
+- Missions last **3–5 minutes** (avoids overload)
+- **No flashing** or harsh light bursts
+- Ethical **micro-rewards** (gentle encouragement)
+- Smooth, controlled animations (< 3 seconds)
+- COPPA-aware design (no public child data exposure)
+- `prefers-reduced-motion` media query support
 
-By default, a new site version will be uploaded and deployed as the production version immediately. If instead, you prefer to only upload the version and manually deploy it as the production version later you can set the `site.uploadOnly` property in the `foundry.config.json` file to `true`.
+---
 
-Production configuration is stored in `.env.production`. A default test is included in `env.test.ts` to verify your production environment variables which runs in Foundry CI whenever git tags are pushed by setting the environment variable `VERIFY_ENV_PRODUCTION=true`.
+## 🏗 Tech Stack
 
-If you did not yet register a subdomain for Foundry website hosting you will need to first do so and then fill in the `VITE_FOUNDRY_REDIRECT_URL` in `.env.production`. The configured OAuth client must also allow the auth callback on the subdomain as a redirect URL.
+### Frontend
+
+| Technology      | Purpose                      |
+| --------------- | ---------------------------- |
+| **React 18**    | Component architecture & SPA |
+| **TypeScript**  | Type-safe development        |
+| **Vite**        | Lightning-fast build tool    |
+| **Canvas API**  | Starfield animation engine   |
+| **CSS Modules** | Scoped component styles      |
+| **Custom i18n** | Bilingual translation system |
+
+### Backend
+
+| Technology             | Purpose               |
+| ---------------------- | --------------------- |
+| **Node.js + Express**  | REST API server       |
+| **JWT**                | Authentication tokens |
+| **bcrypt**             | Password hashing      |
+| **Helmet**             | Security headers      |
+| **express-rate-limit** | Rate limiting         |
+| **PostgreSQL**         | Production database   |
+
+---
+
+## 📁 Project Structure

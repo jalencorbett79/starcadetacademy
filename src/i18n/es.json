@@ -1,0 +1,159 @@
+{
+  "app": {
+    "title": "Academia Cadete Estelar",
+    "subtitle": "Una Aventura Espacial Bilingüe de Aprendizaje",
+    "tagline": "Explora la Galaxia. Aprende en el Camino."
+  },
+  "nav": {
+    "home": "Inicio",
+    "missions": "Misiones",
+    "profile": "Mi Perfil",
+    "dashboard": "Panel de Padres",
+    "logout": "Salir",
+    "language": "English"
+  },
+  "auth": {
+    "login": "Inicio de Misión",
+    "signup": "Inscribir Cadete",
+    "email": "Correo del Padre",
+    "password": "Código Secreto",
+    "confirmPassword": "Confirmar Código Secreto",
+    "parentName": "Nombre del Padre",
+    "childName": "Nombre del Cadete",
+    "childAge": "Edad del Cadete",
+    "forgotPassword": "¿Olvidaste tu Código Secreto?",
+    "resetPassword": "Restablecer Código Secreto",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya estás inscrito?",
+    "signupLink": "Inscribe a tu Cadete",
+    "loginLink": "Inicia sesión aquí",
+    "verifyEmail": "¡Revisa tu correo para verificar tu cuenta!",
+    "emailPlaceholder": "padre@correo.com",
+    "passwordPlaceholder": "Ingresa tu código secreto",
+    "namePlaceholder": "Ingresa tu nombre"
+  },
+  "landing": {
+    "heroTitle": "Bienvenido a la Academia Cadete Estelar",
+    "heroSubtitle": "Donde Pequeños Exploradores Aprenden Grandes Cosas",
+    "ctaButton": "Comienza Tu Misión",
+    "features": {
+      "reading": "Lectura Espacial",
+      "readingDesc": "Aprende letras, sonidos y palabras",
+      "counting": "Conteo de Cohetes",
+      "countingDesc": "Cuenta estrellas, aliens y más",
+      "bilingual": "Dos Idiomas",
+      "bilingualDesc": "Aprende en inglés y español"
+    }
+  },
+  "missions": {
+    "title": "Control de Misión",
+    "selectAge": "Selecciona Nivel del Cadete",
+    "age3": "Edad 3 - Principiante",
+    "age4": "Edad 4 - Intermedio",
+    "age5": "Edad 5 - Avanzado",
+    "reading": "Misiones de Lectura",
+    "counting": "Misiones de Conteo",
+    "start": "Lanzar Misión",
+    "complete": "¡MISIÓN COMPLETA!",
+    "next": "Siguiente Misión",
+    "retry": "Intentar de Nuevo",
+    "back": "Volver a la Base"
+  },
+  "reading": {
+    "letterMatch": "Emparejar Letras",
+    "letterMatchDesc": "¡Empareja las letras que ves!",
+    "soundMatch": "Emparejar Sonidos",
+    "soundMatchDesc": "¿Qué letra hace este sonido?",
+    "cvcBuild": "Constructor de Palabras",
+    "cvcBuildDesc": "¡Construye palabras letra por letra!",
+    "dragWords": "Atrapa Palabras",
+    "dragWordsDesc": "¡Arrastra las palabras al lugar correcto!",
+    "sentenceBuild": "Estación de Oraciones",
+    "sentenceBuildDesc": "¡Construye una oración en el espacio!",
+    "comprehension": "Estrellas de Historias",
+    "comprehensionDesc": "¡Lee y responde preguntas!",
+    "instructions": {
+      "findLetter": "Encuentra la letra",
+      "whatSound": "¿Qué letra hace este sonido?",
+      "buildWord": "Construye la palabra",
+      "dragWord": "Arrastra la palabra a su imagen",
+      "buildSentence": "Pon las palabras en orden",
+      "readAnswer": "Lee y elige la respuesta correcta"
+    }
+  },
+  "counting": {
+    "countStars": "Cuenta las Estrellas",
+    "countStarsDesc": "¿Cuántas estrellas ves?",
+    "countAliens": "Cuenta de Aliens",
+    "countAliensDesc": "¡Cuenta los aliens amigables!",
+    "rocketFuel": "Matemáticas de Combustible",
+    "rocketFuelDesc": "¡Suma combustible para lanzar el cohete!",
+    "addBlocks": "Bloques de Suma",
+    "addBlocksDesc": "¡Suma los bloques espaciales!",
+    "instructions": {
+      "howMany": "¿Cuántos ves?",
+      "addFuel": "¡Suma los números de combustible!",
+      "addBlocks": "¿Cuánto suman estos bloques?"
+    }
+  },
+  "xp": {
+    "title": "Progreso del Explorador",
+    "level": "Nivel",
+    "xpPoints": "Puntos XP",
+    "nextRank": "Siguiente Rango",
+    "ranks": {
+      "beginnerExplorer": "Explorador Principiante",
+      "spaceNewbie": "Novato Espacial",
+      "spaceExpert": "Experto Espacial",
+      "pilotMothership": "Piloto de la Nave Nodriza"
+    }
+  },
+  "rewards": {
+    "great": "¡Buen trabajo, Cadete!",
+    "awesome": "¡Trabajo increíble!",
+    "fantastic": "¡Vuelo fantástico!",
+    "superstar": "¡Eres una Superestrella!",
+    "keepGoing": "¡Sigue explorando!",
+    "tryAgain": "¡Casi lo logras! ¡Intenta de nuevo!",
+    "missionComplete": "MISIÓN COMPLETA",
+    "xpEarned": "XP Ganado"
+  },
+  "dashboard": {
+    "title": "Control de Misión para Padres",
+    "overview": "Resumen",
+    "progress": "Progreso",
+    "skills": "Habilidades",
+    "time": "Tiempo Dedicado",
+    "weakAreas": "Áreas por Mejorar",
+    "downloadReport": "Descargar Reporte",
+    "totalXP": "XP Total",
+    "missionsCompleted": "Misiones Completadas",
+    "streak": "Racha de Días",
+    "readingSkills": "Habilidades de Lectura",
+    "countingSkills": "Habilidades de Conteo",
+    "letterRecognition": "Reconocimiento de Letras",
+    "phonics": "Fonética",
+    "sightWords": "Palabras a la Vista",
+    "counting120": "Conteo 1-20",
+    "addition": "Suma Simple"
+  },
+  "profile": {
+    "title": "Perfil del Cadete",
+    "rank": "Rango",
+    "badges": "Insignias",
+    "achievements": "Logros",
+    "editProfile": "Editar Perfil"
+  },
+  "common": {
+    "loading": "Lanzando...",
+    "error": "¡Houston, tenemos un problema!",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "correct": "¡Correcto!",
+    "incorrect": "¡Casi!",
+    "score": "Puntuación"
+  }
+}
