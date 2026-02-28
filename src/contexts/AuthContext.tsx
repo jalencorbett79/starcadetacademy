@@ -1,4 +1,24 @@
-import React, { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from "react";
+import {
+  isBackendEnabled,
+  apiLogin,
+  apiSignup,
+  apiGetChildren,
+  apiCreateChild,
+  apiGetProgress,
+  apiLogActivity,
+  apiGetActivities,
+  setToken,
+  clearToken,
+  type ApiActivityInput,
+} from "../lib/api";
 
 export interface ChildProfile {
   id: string;
@@ -8,7 +28,7 @@ export interface ChildProfile {
   xp: number;
   level: number;
   rank: string;
-  language: 'en' | 'es';
+  language: "en" | "es";
   streakDays: number;
   missionsCompleted: number;
   badges: string[];
@@ -25,7 +45,7 @@ export interface ChildProfile {
 export interface ActivityEntry {
   id: string;
   date: string;
-  type: 'reading' | 'counting';
+  type: "reading" | "counting";
   module: string;
   score: number;
   xpEarned: number;
@@ -51,8 +71,11 @@ interface AuthContextType {
   addChild: (name: string, age: 3 | 4 | 5) => void;
   setActiveChild: (childId: string) => void;
   updateChildXP: (xp: number) => void;
-  addActivityEntry: (entry: Omit<ActivityEntry, 'id' | 'date'>) => void;
-  updateChildSkill: (skill: keyof ChildProfile['skills'], value: number) => void;
+  addActivityEntry: (entry: Omit<ActivityEntry, "id" | "date">) => void;
+  updateChildSkill: (
+    skill: keyof ChildProfile["skills"],
+    value: number
+  ) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -63,13 +86,20 @@ function getLevelFromXP(xp: number): number {
 }
 
 function getRankFromLevel(level: number): string {
-  if (level <= 5) return 'beginnerExplorer';
-  if (level <= 10) return 'spaceNewbie';
-  if (level <= 20) return 'spaceExpert';
-  return 'pilotMothership';
+  if (level <= 5) return "beginnerExplorer";
+  if (level <= 10) return "spaceNewbie";
+  if (level <= 20) return "spaceExpert";
+  return "pilotMothership";
 }
 
-const AVATAR_COLORS = ['#ff6fd8', '#3813c2', '#00d4ff', '#ff9500', '#00e676', '#ff4081'];
+const AVATAR_COLORS = [
+  "#ff6fd8",
+  "#3813c2",
+  "#00d4ff",
+  "#ff9500",
+  "#00e676",
+  "#ff4081",
+];
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
@@ -79,25 +109,29 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
+export function AuthProvider({
+  children,
+}: AuthProviderProps): React.ReactElement {
   const [user, setUser] = useState<ParentUser | null>(null);
-  const [activeChild, setActiveChildState] = useState<ChildProfile | null>(null);
+  const [activeChild, setActiveChildState] = useState<ChildProfile | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   // Load from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('starCadetUser');
-    const storedActiveChild = localStorage.getItem('starCadetActiveChild');
+    const stored = localStorage.getItem("starCadetUser");
+    const storedActiveChild = localStorage.getItem("starCadetActiveChild");
     if (stored) {
       try {
         const parsed = JSON.parse(stored) as ParentUser;
         setUser(parsed);
         if (storedActiveChild) {
-          const child = parsed.children.find(c => c.id === storedActiveChild);
+          const child = parsed.children.find((c) => c.id === storedActiveChild);
           if (child) setActiveChildState(child);
         }
       } catch {
-        localStorage.removeItem('starCadetUser');
+        localStorage.removeItem("starCadetUser");
       }
     }
     setIsLoading(false);
@@ -106,155 +140,312 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   // Persist to localStorage
   const persistUser = useCallback((u: ParentUser) => {
     setUser(u);
-    localStorage.setItem('starCadetUser', JSON.stringify(u));
+    localStorage.setItem("starCadetUser", JSON.stringify(u));
   }, []);
 
-  const login = useCallback(async (email: string, _password: string) => {
-    // In production, this would be an API call with JWT
-    // For demo, we check localStorage
-    const stored = localStorage.getItem('starCadetUsers');
-    const users: ParentUser[] = stored ? JSON.parse(stored) : [];
-    const found = users.find(u => u.email === email);
-    if (found) {
-      persistUser(found);
-    } else {
-      throw new Error('Invalid credentials');
-    }
-  }, [persistUser]);
+  // ========================
+  // LOGIN
+  // ========================
+  const login = useCallback(
+    async (email: string, password: string) => {
+      if (isBackendEnabled) {
+        // --- Backend mode: call API ---
+        const res = await apiLogin(email, password);
+        setToken(res.token);
 
-  const signup = useCallback(async (email: string, _password: string, name: string) => {
-    const stored = localStorage.getItem('starCadetUsers');
-    const users: ParentUser[] = stored ? JSON.parse(stored) : [];
-    if (users.find(u => u.email === email)) {
-      throw new Error('Account already exists');
-    }
-    const newUser: ParentUser = {
-      id: generateId(),
-      email,
-      name,
-      children: [],
-      createdAt: new Date().toISOString(),
-    };
-    users.push(newUser);
-    localStorage.setItem('starCadetUsers', JSON.stringify(users));
-    persistUser(newUser);
-  }, [persistUser]);
+        // Fetch children and their progress
+        const apiChildren = await apiGetChildren();
+        const fullChildren: ChildProfile[] = await Promise.all(
+          apiChildren.map(async (c) => {
+            const progress = await apiGetProgress(c.id);
+            let activities: ActivityEntry[] = [];
+            try {
+              const rawActs = await apiGetActivities(c.id);
+              activities = rawActs.map((a) => ({
+                id: a.id,
+                date: a.createdAt,
+                type: a.type as "reading" | "counting",
+                module: a.module,
+                score: a.score,
+                xpEarned: a.xpEarned,
+                timeSpentSeconds: a.timeSpentSeconds,
+              }));
+            } catch {
+              /* empty */
+            }
 
+            return {
+              id: c.id,
+              name: c.name,
+              age: c.age,
+              avatarColor: c.avatarColor,
+              xp: progress.xp,
+              level: progress.level,
+              rank: progress.rank,
+              language: (c.language || "en") as "en" | "es",
+              streakDays: progress.streakDays,
+              missionsCompleted: progress.missionsCompleted,
+              badges: [],
+              skills: progress.skills,
+              activityLog: activities,
+            };
+          })
+        );
+
+        const parentUser: ParentUser = {
+          id: res.user.id,
+          email: res.user.email,
+          name: res.user.name,
+          children: fullChildren,
+          createdAt: res.user.createdAt,
+        };
+        persistUser(parentUser);
+      } else {
+        // --- Local mode: localStorage ---
+        // In production, this would be an API call with JWT
+        // For demo, we check localStorage
+        const stored = localStorage.getItem("starCadetUsers");
+        const users: ParentUser[] = stored ? JSON.parse(stored) : [];
+        const found = users.find((u) => u.email === email);
+        if (found) {
+          persistUser(found);
+        } else {
+          throw new Error("Invalid credentials");
+        }
+      }
+    },
+    [persistUser]
+  );
+
+  // ========================
+  // SIGNUP
+  // ========================
+  const signup = useCallback(
+    async (email: string, password: string, name: string) => {
+      if (isBackendEnabled) {
+        const res = await apiSignup(email, password, name);
+        setToken(res.token);
+        const parentUser: ParentUser = {
+          id: res.user.id,
+          email: res.user.email,
+          name: res.user.name,
+          children: [],
+          createdAt: res.user.createdAt,
+        };
+        persistUser(parentUser);
+      } else {
+        const stored = localStorage.getItem("starCadetUsers");
+        const users: ParentUser[] = stored ? JSON.parse(stored) : [];
+        if (users.find((u) => u.email === email)) {
+          throw new Error("Account already exists");
+        }
+        const newUser: ParentUser = {
+          id: generateId(),
+          email,
+          name,
+          children: [],
+          createdAt: new Date().toISOString(),
+        };
+        users.push(newUser);
+        localStorage.setItem("starCadetUsers", JSON.stringify(users));
+        persistUser(newUser);
+      }
+    },
+    [persistUser]
+  );
+
+  // ========================
+  // LOGOUT
+  // ========================
   const logout = useCallback(() => {
     setUser(null);
     setActiveChildState(null);
-    localStorage.removeItem('starCadetUser');
-    localStorage.removeItem('starCadetActiveChild');
+    localStorage.removeItem("starCadetUser");
+    localStorage.removeItem("starCadetActiveChild");
+    clearToken();
   }, []);
 
-  const addChild = useCallback((name: string, age: 3 | 4 | 5) => {
-    if (!user) return;
-    const newChild: ChildProfile = {
-      id: generateId(),
-      name,
-      age,
-      avatarColor: AVATAR_COLORS[user.children.length % AVATAR_COLORS.length],
-      xp: 0,
-      level: 1,
-      rank: 'beginnerExplorer',
-      language: 'en',
-      streakDays: 0,
-      missionsCompleted: 0,
-      badges: [],
-      skills: {
-        letterRecognition: 0,
-        phonics: 0,
-        sightWords: 0,
-        counting: 0,
-        addition: 0,
-      },
-      activityLog: [],
-    };
-    const updated = { ...user, children: [...user.children, newChild] };
-    persistUser(updated);
-    // Also update in users array
-    const stored = localStorage.getItem('starCadetUsers');
-    const users: ParentUser[] = stored ? JSON.parse(stored) : [];
-    const idx = users.findIndex(u => u.id === user.id);
-    if (idx !== -1) {
-      users[idx] = updated;
-      localStorage.setItem('starCadetUsers', JSON.stringify(users));
-    }
-  }, [user, persistUser]);
+  // ========================
+  // ADD CHILD
+  // ========================
+  const addChild = useCallback(
+    async (name: string, age: 3 | 4 | 5) => {
+      if (!user) return;
 
-  const setActiveChild = useCallback((childId: string) => {
-    if (!user) return;
-    const child = user.children.find(c => c.id === childId);
-    if (child) {
-      setActiveChildState(child);
-      localStorage.setItem('starCadetActiveChild', childId);
-    }
-  }, [user]);
+      if (isBackendEnabled) {
+        const apiChild = await apiCreateChild(name, age);
+        const newChild: ChildProfile = {
+          id: apiChild.id,
+          name: apiChild.name,
+          age: apiChild.age,
+          avatarColor: apiChild.avatarColor,
+          xp: 0,
+          level: 1,
+          rank: "beginnerExplorer",
+          language: (apiChild.language || "en") as "en" | "es",
+          streakDays: 0,
+          missionsCompleted: 0,
+          badges: [],
+          skills: {
+            letterRecognition: 0,
+            phonics: 0,
+            sightWords: 0,
+            counting: 0,
+            addition: 0,
+          },
+          activityLog: [],
+        };
+        const updated = { ...user, children: [...user.children, newChild] };
+        persistUser(updated);
+      } else {
+        const newChild: ChildProfile = {
+          id: generateId(),
+          name,
+          age,
+          avatarColor:
+            AVATAR_COLORS[user.children.length % AVATAR_COLORS.length],
+          xp: 0,
+          level: 1,
+          rank: "beginnerExplorer",
+          language: "en",
+          streakDays: 0,
+          missionsCompleted: 0,
+          badges: [],
+          skills: {
+            letterRecognition: 0,
+            phonics: 0,
+            sightWords: 0,
+            counting: 0,
+            addition: 0,
+          },
+          activityLog: [],
+        };
+        const updated = { ...user, children: [...user.children, newChild] };
+        persistUser(updated);
+        // Also update in users array
+        const stored = localStorage.getItem("starCadetUsers");
+        const users: ParentUser[] = stored ? JSON.parse(stored) : [];
+        const idx = users.findIndex((u) => u.id === user.id);
+        if (idx !== -1) {
+          users[idx] = updated;
+          localStorage.setItem("starCadetUsers", JSON.stringify(users));
+        }
+      }
+    },
+    [user, persistUser]
+  );
 
-  const updateChildXP = useCallback((xpToAdd: number) => {
-    if (!user || !activeChild) return;
-    const newXP = activeChild.xp + xpToAdd;
-    const newLevel = getLevelFromXP(newXP);
-    const newRank = getRankFromLevel(newLevel);
-    const updatedChild: ChildProfile = {
-      ...activeChild,
-      xp: newXP,
-      level: newLevel,
-      rank: newRank,
-      missionsCompleted: activeChild.missionsCompleted + 1,
-    };
-    const updatedChildren = user.children.map(c =>
-      c.id === activeChild.id ? updatedChild : c
-    );
-    const updated = { ...user, children: updatedChildren };
-    persistUser(updated);
-    setActiveChildState(updatedChild);
-    // Sync to users array
-    const stored = localStorage.getItem('starCadetUsers');
-    const users: ParentUser[] = stored ? JSON.parse(stored) : [];
-    const idx = users.findIndex(u => u.id === user.id);
-    if (idx !== -1) {
-      users[idx] = updated;
-      localStorage.setItem('starCadetUsers', JSON.stringify(users));
-    }
-  }, [user, activeChild, persistUser]);
+  // ========================
+  // SET ACTIVE CHILD
+  // ========================
+  const setActiveChild = useCallback(
+    (childId: string) => {
+      if (!user) return;
+      const child = user.children.find((c) => c.id === childId);
+      if (child) {
+        setActiveChildState(child);
+        localStorage.setItem("starCadetActiveChild", childId);
+      }
+    },
+    [user]
+  );
 
-  const addActivityEntry = useCallback((entry: Omit<ActivityEntry, 'id' | 'date'>) => {
-    if (!user || !activeChild) return;
-    const newEntry: ActivityEntry = {
-      ...entry,
-      id: generateId(),
-      date: new Date().toISOString(),
-    };
-    const updatedChild: ChildProfile = {
-      ...activeChild,
-      activityLog: [...activeChild.activityLog, newEntry],
-    };
-    const updatedChildren = user.children.map(c =>
-      c.id === activeChild.id ? updatedChild : c
-    );
-    const updated = { ...user, children: updatedChildren };
-    persistUser(updated);
-    setActiveChildState(updatedChild);
-  }, [user, activeChild, persistUser]);
+  // ========================
+  // UPDATE XP
+  // ========================
+  const updateChildXP = useCallback(
+    (xpToAdd: number) => {
+      if (!user || !activeChild) return;
+      const newXP = activeChild.xp + xpToAdd;
+      const newLevel = getLevelFromXP(newXP);
+      const newRank = getRankFromLevel(newLevel);
+      const updatedChild: ChildProfile = {
+        ...activeChild,
+        xp: newXP,
+        level: newLevel,
+        rank: newRank,
+        missionsCompleted: activeChild.missionsCompleted + 1,
+      };
+      const updatedChildren = user.children.map((c) =>
+        c.id === activeChild.id ? updatedChild : c
+      );
+      const updated = { ...user, children: updatedChildren };
+      persistUser(updated);
+      setActiveChildState(updatedChild);
+      // Sync to users array
+      if (!isBackendEnabled) {
+        const stored = localStorage.getItem("starCadetUsers");
+        const users: ParentUser[] = stored ? JSON.parse(stored) : [];
+        const idx = users.findIndex((u) => u.id === user.id);
+        if (idx !== -1) {
+          users[idx] = updated;
+          localStorage.setItem("starCadetUsers", JSON.stringify(users));
+        }
+      }
+    },
+    [user, activeChild, persistUser]
+  );
 
-  const updateChildSkill = useCallback((skill: keyof ChildProfile['skills'], value: number) => {
-    if (!user || !activeChild) return;
-    const updatedChild: ChildProfile = {
-      ...activeChild,
-      skills: {
-        ...activeChild.skills,
-        [skill]: Math.min(100, activeChild.skills[skill] + value),
-      },
-    };
-    const updatedChildren = user.children.map(c =>
-      c.id === activeChild.id ? updatedChild : c
-    );
-    const updated = { ...user, children: updatedChildren };
-    persistUser(updated);
-    setActiveChildState(updatedChild);
-  }, [user, activeChild, persistUser]);
+  // ========================
+  // ADD ACTIVITY ENTRY
+  // ========================
+  const addActivityEntry = useCallback(
+    (entry: Omit<ActivityEntry, "id" | "date">) => {
+      if (!user || !activeChild) return;
 
+      // Fire-and-forget API call if backend is enabled
+      if (isBackendEnabled) {
+        const apiEntry: ApiActivityInput = {
+          type: entry.type,
+          module: entry.module,
+          score: entry.score,
+          xpEarned: entry.xpEarned,
+          timeSpentSeconds: entry.timeSpentSeconds,
+        };
+        apiLogActivity(activeChild.id, apiEntry).catch(console.error);
+      }
+
+      const newEntry: ActivityEntry = {
+        ...entry,
+        id: generateId(),
+        date: new Date().toISOString(),
+      };
+      const updatedChild: ChildProfile = {
+        ...activeChild,
+        activityLog: [...activeChild.activityLog, newEntry],
+      };
+      const updatedChildren = user.children.map((c) =>
+        c.id === activeChild.id ? updatedChild : c
+      );
+      const updated = { ...user, children: updatedChildren };
+      persistUser(updated);
+      setActiveChildState(updatedChild);
+    },
+    [user, activeChild, persistUser]
+  );
+
+  // ========================
+  // UPDATE SKILL
+  // ========================
+  const updateChildSkill = useCallback(
+    (skill: keyof ChildProfile["skills"], value: number) => {
+      if (!user || !activeChild) return;
+      const updatedChild: ChildProfile = {
+        ...activeChild,
+        skills: {
+          ...activeChild.skills,
+          [skill]: Math.min(100, activeChild.skills[skill] + value),
+        },
+      };
+      const updatedChildren = user.children.map((c) =>
+        c.id === activeChild.id ? updatedChild : c
+      );
+      const updated = { ...user, children: updatedChildren };
+      persistUser(updated);
+      setActiveChildState(updatedChild);
+    },
+    [user, activeChild, persistUser]
+  );
   return (
     <AuthContext.Provider
       value={{
@@ -280,7 +471,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
