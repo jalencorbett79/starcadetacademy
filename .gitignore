@@ -1,17 +1,13 @@
 # Dependencies
 node_modules/
-server/node_modules/
-# Generated from @osdk/create-app CLI
 
-# Build output
 dist/
 dist-ssr/
 server/dist/
-
-# Environment
 .env
 .env.local
 .env.production.local
+*.local
 *.local
 server/.env
 
@@ -40,7 +36,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Testing
 coverage/
 
 # Temp
