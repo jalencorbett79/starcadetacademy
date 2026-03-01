@@ -5,6 +5,7 @@ import NeonButton from '../components/NeonButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './Games.module.css';
+import { playCorrect, playIncorrect } from '../lib/sounds';
 
 interface LetterMatchGameProps {
   onBack: () => void;
@@ -61,7 +62,10 @@ function LetterMatchGame({ onBack }: LetterMatchGameProps): React.ReactElement {
       setShowResult(true);
 
       if (correct) {
+        playCorrect();
         setScore((s) => s + 1);
+      } else {
+        playIncorrect();
       }
 
       setTimeout(() => {

@@ -12,8 +12,8 @@
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
-/** True when serverless backend is configured (always on in production builds) */
-export const isBackendEnabled = import.meta.env.PROD || !!API_BASE;
+/** True when serverless backend is configured */
+export const isBackendEnabled = !!API_BASE || import.meta.env.PROD;
 
 function getToken(): string | null {
   return localStorage.getItem('starCadetToken');

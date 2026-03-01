@@ -5,6 +5,7 @@ import NeonButton from '../components/NeonButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './Games.module.css';
+import { playCorrect, playIncorrect, playCountPop } from '../lib/sounds';
 
 interface CountStarsGameProps {
   onBack: () => void;
@@ -60,7 +61,12 @@ function CountStarsGame({ onBack }: CountStarsGameProps): React.ReactElement {
       setIsCorrect(correct);
       setShowResult(true);
 
-      if (correct) setScore((s) => s + 1);
+      if (correct) {
+        playCorrect();
+        setScore((s) => s + 1);
+      } else {
+        playIncorrect();
+      }
 
       setTimeout(() => {
         if (currentRound + 1 >= TOTAL_ROUNDS) {
@@ -117,7 +123,7 @@ function CountStarsGame({ onBack }: CountStarsGameProps): React.ReactElement {
 
       <div className={styles.emojiField}>
         {Array.from({ length: round.count }).map((_, i) => (
-          <span key={i} className={styles.countEmoji} style={{ animationDelay: `${i * 0.1}s` }}>
+          <span key={i} className={styles.countEmoji} style={{ animationDelay: `${i * 0.1}s` }} onClick={() => playCountPop()}>
             {round.emoji}
           </span>
         ))}

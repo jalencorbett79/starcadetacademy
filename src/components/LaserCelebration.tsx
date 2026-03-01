@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './LaserCelebration.module.css';
+import { playCelebration } from '../lib/sounds';
 
 interface LaserCelebrationProps {
   show: boolean;
@@ -37,6 +38,7 @@ function LaserCelebration({ show, message = 'MISSION COMPLETE', xpEarned = 0, on
 
     setVisible(true);
     setFadeOut(false);
+    playCelebration();
 
     const canvas = canvasRef.current;
     if (!canvas) return;

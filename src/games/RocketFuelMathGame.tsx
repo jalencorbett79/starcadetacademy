@@ -5,6 +5,7 @@ import NeonButton from '../components/NeonButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './Games.module.css';
+import { playCorrect, playIncorrect, playRocketLaunch } from '../lib/sounds';
 
 interface RocketFuelMathGameProps {
   onBack: () => void;
@@ -61,8 +62,12 @@ function RocketFuelMathGame({ onBack }: RocketFuelMathGameProps): React.ReactEle
       setIsCorrect(correct);
       setShowResult(true);
       if (correct) {
+        playCorrect();
         setScore((s) => s + 1);
         setRocketLaunched(true);
+        setTimeout(() => playRocketLaunch(), 300);
+      } else {
+        playIncorrect();
       }
 
       setTimeout(() => {
