@@ -23,6 +23,11 @@ function LandingPage({ onNavigate }: LandingPageProps): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
   const { login, signup } = useAuth();
 
+  const handleBackToHero = () => {
+    setAuthMode('none');
+    setError('');
+  };
+
   if (isAuthenticated) {
     onNavigate('childSelect');
     return <div />;
@@ -116,6 +121,9 @@ function LandingPage({ onNavigate }: LandingPageProps): React.ReactElement {
 
         {authMode === 'login' && (
           <div className={styles.authCard}>
+            <button className={styles.backBtn} onClick={handleBackToHero}>
+              ← {t('common.back')}
+            </button>
             <h2 className={styles.authTitle}>🛸 {t('auth.login')}</h2>
             <form onSubmit={handleLogin} className={styles.form}>
               {error && <div className={styles.error}>{error}</div>}
@@ -158,6 +166,9 @@ function LandingPage({ onNavigate }: LandingPageProps): React.ReactElement {
 
         {authMode === 'signup' && (
           <div className={styles.authCard}>
+            <button className={styles.backBtn} onClick={handleBackToHero}>
+              ← {t('common.back')}
+            </button>
             <h2 className={styles.authTitle}>🚀 {t('auth.signup')}</h2>
             <form onSubmit={handleSignup} className={styles.form}>
               {error && <div className={styles.error}>{error}</div>}

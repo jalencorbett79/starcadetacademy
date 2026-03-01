@@ -10,7 +10,7 @@ interface ChildSelectPageProps {
 }
 
 function ChildSelectPage({ onNavigate }: ChildSelectPageProps): React.ReactElement {
-  const { user, addChild, setActiveChild } = useAuth();
+  const { user, addChild, setActiveChild, logout } = useAuth();
   const { t } = useLanguage();
   const [showAddForm, setShowAddForm] = useState(false);
   const [childName, setChildName] = useState('');
@@ -30,9 +30,17 @@ function ChildSelectPage({ onNavigate }: ChildSelectPageProps): React.ReactEleme
     onNavigate('missions');
   };
 
+  const handleLogout = () => {
+    logout();
+    onNavigate('landing');
+  };
+
   return (
     <div className={styles.page}>
       <StarfieldCanvas speed={0.2} starCount={200} />
+      <button className={styles.logoutBtn} onClick={handleLogout}>
+        {t('nav.logout')}
+      </button>
       <div className={styles.content}>
         <h1 className={styles.title}>👨‍🚀 {t('auth.childName')}</h1>
         <p className={styles.subtitle}>{t('missions.selectAge')}</p>

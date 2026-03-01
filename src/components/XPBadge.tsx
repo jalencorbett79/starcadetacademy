@@ -49,7 +49,7 @@ function XPBadge({ xp, level, rank, showDetails = true }: XPBadgeProps): React.R
                 style={{ width: `${progressPercent}%`, background: colors.primary }}
               />
             </div>
-            <div className={styles.xpText}>{xp} XP</div>
+            <div className={styles.xpText}>{xpInLevel}/100 XP</div>
           </>
         )}
       </div>
