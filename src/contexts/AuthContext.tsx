@@ -81,11 +81,11 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // XP thresholds for each level
-function getLevelFromXP(xp: number): number {
+export function getLevelFromXP(xp: number): number {
   return Math.floor(xp / 100) + 1;
 }
 
-function getRankFromLevel(level: number): string {
+export function getRankFromLevel(level: number): string {
   if (level <= 5) return "beginnerExplorer";
   if (level <= 10) return "spaceNewbie";
   if (level <= 20) return "spaceExpert";

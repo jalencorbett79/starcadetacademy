@@ -186,3 +186,24 @@
   gap: 8px;
   justify-content: center;
 }
+
+.logoutBtn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  background: none;
+  border: 1px solid rgba(255, 64, 129, 0.4);
+  color: #ff4081;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 64, 129, 0.15);
+  box-shadow: 0 0 10px rgba(255, 64, 129, 0.3);
+}
