@@ -2,8 +2,10 @@
  * API client for Star Cadet Academy serverless backend.
  *
  * Supports two modes:
- *   1. Backend mode (VITE_API_URL is set) — calls /api/* serverless functions with JWT
- *   2. Local mode (no VITE_API_URL) — falls back to localStorage (offline / demo)
+ *   1. Backend mode — calls /api/* serverless functions with JWT.
+ *      Enabled automatically in production builds (same-origin on Vercel)
+ *      or when VITE_API_URL is explicitly set in development.
+ *   2. Local mode (dev with no VITE_API_URL) — falls back to localStorage (offline / demo)
  *
  * The AuthContext checks which mode to use automatically.
  */
