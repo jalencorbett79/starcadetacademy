@@ -30,10 +30,15 @@ function ChildSelectPage({ onNavigate }: ChildSelectPageProps): React.ReactEleme
     onNavigate('missions');
   };
 
+  const handleLogout = () => {
+    logout();
+    onNavigate('landing');
+  };
+
   return (
     <div className={styles.page}>
       <StarfieldCanvas speed={0.2} starCount={200} />
-      <button className={styles.logoutBtn} onClick={() => { logout(); onNavigate('landing'); }}>
+      <button className={styles.logoutBtn} onClick={handleLogout}>
         {t('nav.logout')}
       </button>
       <div className={styles.content}>
