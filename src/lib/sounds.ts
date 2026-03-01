@@ -75,3 +75,33 @@ export function playRocketLaunch() {
     setTimeout(() => playTone(200 + i * 80, 0.15, 'sawtooth', 0.1 + i * 0.02), i * 60);
   }
 }
+
+/**
+ * Speak a letter sound using the Web Speech API.
+ * Pronounces the letter phonetically followed by the example word.
+ */
+export function speakLetterSound(letter: string, example: string, lang: 'en' | 'es'): void {
+  try {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+
+    const langTag = lang === 'es' ? 'es-ES' : 'en-US';
+
+    // Speak the letter sound
+    const letterUtterance = new SpeechSynthesisUtterance(letter);
+    letterUtterance.lang = langTag;
+    letterUtterance.rate = 0.8;
+    letterUtterance.volume = 1;
+    window.speechSynthesis.speak(letterUtterance);
+
+    // Extract the word from the example (strip emoji and special characters, preserve letters with diacriticals)
+    const word = example.replace(/[^\p{L}\p{M}\s]/gu, '').trim();
+    if (word) {
+      const wordUtterance = new SpeechSynthesisUtterance(word);
+      wordUtterance.lang = langTag;
+      wordUtterance.rate = 0.85;
+      wordUtterance.volume = 1;
+      window.speechSynthesis.speak(wordUtterance);
+    }
+  } catch { /* speech synthesis not supported */ }
+}

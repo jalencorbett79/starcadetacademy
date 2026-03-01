@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import GameShell from './GameShell';
 import LaserCelebration from '../components/LaserCelebration';
 import NeonButton from '../components/NeonButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './Games.module.css';
-import { playCorrect, playIncorrect } from '../lib/sounds';
+import { playCorrect, playIncorrect, speakLetterSound } from '../lib/sounds';
 
 interface SoundMatchGameProps {
   onBack: () => void;
@@ -83,6 +83,15 @@ function SoundMatchGame({ onBack }: SoundMatchGameProps): React.ReactElement {
 
   const round = rounds[currentRound];
 
+  const handleSpeak = useCallback(() => {
+    speakLetterSound(round.target.letter, round.target.example, language === 'es' ? 'es' : 'en');
+  }, [round, language]);
+
+  // Auto-play the letter sound when the round or language changes
+  useEffect(() => {
+    handleSpeak();
+  }, [handleSpeak]);
+
   const handleSelect = useCallback(
     (letter: string) => {
       if (selected) return;
@@ -154,6 +163,14 @@ function SoundMatchGame({ onBack }: SoundMatchGameProps): React.ReactElement {
       <div className={styles.targetDisplay}>
         <span className={styles.soundHint}>{round.target.sound}</span>
         <span className={styles.exampleHint}>{round.target.example}</span>
+        <button
+          className={styles.hearSoundBtn}
+          onClick={handleSpeak}
+          aria-label="Hear letter sound again"
+          type="button"
+        >
+          🔊
+        </button>
       </div>
 
       <div className={styles.optionsGrid}>
