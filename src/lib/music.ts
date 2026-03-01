@@ -90,11 +90,11 @@ function getCtx(): AudioContext {
   if (!ctx) {
     ctx = new AudioCtx();
     compressor = ctx.createDynamicsCompressor();
-    compressor.threshold.setValueAtTime(-20, ctx.currentTime);
-    compressor.knee.setValueAtTime(10, ctx.currentTime);
-    compressor.ratio.setValueAtTime(4, ctx.currentTime);
-    compressor.attack.setValueAtTime(0.003, ctx.currentTime);
-    compressor.release.setValueAtTime(0.2, ctx.currentTime);
+    compressor.threshold.setValueAtTime(-14, ctx.currentTime);
+    compressor.knee.setValueAtTime(20, ctx.currentTime);
+    compressor.ratio.setValueAtTime(8, ctx.currentTime);
+    compressor.attack.setValueAtTime(0.002, ctx.currentTime);
+    compressor.release.setValueAtTime(0.15, ctx.currentTime);
     compressor.connect(ctx.destination);
     masterGain = ctx.createGain();
     masterGain.gain.setValueAtTime(currentVolume, ctx.currentTime);
@@ -139,13 +139,13 @@ function bass(freq: number, start: number, dur: number, volume = 1.0) {
   const osc1 = c.createOscillator(); osc1.type = 'sawtooth'; osc1.frequency.setValueAtTime(freq, start);
   const osc2 = c.createOscillator(); osc2.type = 'square'; osc2.frequency.setValueAtTime(freq * 0.999, start);
   const filter = c.createBiquadFilter();
-  filter.type = 'lowpass'; filter.frequency.setValueAtTime(280, start); filter.Q.setValueAtTime(5, start);
+  filter.type = 'lowpass'; filter.frequency.setValueAtTime(280, start); filter.Q.setValueAtTime(2, start);
   filter.frequency.linearRampToValueAtTime(700, start + dur * 0.25);
   filter.frequency.linearRampToValueAtTime(200, start + dur);
   const g = c.createGain();
   g.gain.setValueAtTime(0, start);
-  g.gain.linearRampToValueAtTime(0.30 * volume, start + 0.015);
-  g.gain.setValueAtTime(0.30 * volume, start + dur * 0.65);
+  g.gain.linearRampToValueAtTime(0.20 * volume, start + 0.015);
+  g.gain.setValueAtTime(0.20 * volume, start + dur * 0.65);
   g.gain.exponentialRampToValueAtTime(0.001, start + dur);
   osc1.connect(filter); osc2.connect(filter); filter.connect(g); g.connect(dest());
   osc1.start(start); osc1.stop(start + dur + 0.05);
@@ -211,7 +211,7 @@ function kick(start: number) {
   osc.frequency.setValueAtTime(160, start);
   osc.frequency.exponentialRampToValueAtTime(35, start + 0.15);
   const g = c.createGain();
-  g.gain.setValueAtTime(0.35, start);
+  g.gain.setValueAtTime(0.28, start);
   g.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
   osc.connect(g); g.connect(dest());
   osc.start(start); osc.stop(start + 0.4);
