@@ -368,7 +368,15 @@ export function startMusic() {
   isPlaying = true;
 
   const c = getCtx();
-  let nextStart = c.currentTime + 0.1;
+  const startDelay = 0.5;
+  let nextStart = c.currentTime + startDelay;
+
+  // Fade in from silence to prevent distortion/clicking on initial playback
+  if (masterGain) {
+    masterGain.gain.cancelScheduledValues(c.currentTime);
+    masterGain.gain.setValueAtTime(0, c.currentTime);
+    masterGain.gain.linearRampToValueAtTime(currentVolume, nextStart);
+  }
 
   scheduleLoop(nextStart);
   nextStart += LOOP_DURATION;
