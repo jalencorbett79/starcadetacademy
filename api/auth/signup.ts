@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { handleCors } from '../_lib/cors';
 import { generateToken } from '../_lib/auth';
 import { query, initDB } from '../_lib/db';
+import { sendWelcomeEmail } from '../_lib/email';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (handleCors(req, res)) return;
@@ -41,6 +42,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     const user = result.rows[0];
+
+    // Send welcome email (non-blocking – failure must not prevent sign-up)
+    sendWelcomeEmail(user.email, user.name).catch((err) =>
+      console.error('Failed to send welcome email:', err)
+    );
 
     const token = generateToken({
       userId: user.id,
