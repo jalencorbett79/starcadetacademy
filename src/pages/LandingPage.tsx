@@ -5,6 +5,7 @@ import LanguageToggle from '../components/LanguageToggle';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './LandingPage.module.css';
+import { startMusic, isMusicPlaying } from '../lib/music';
 
 interface LandingPageProps {
   onNavigate: (page: string) => void;
@@ -33,6 +34,9 @@ function LandingPage({ onNavigate }: LandingPageProps): React.ReactElement {
     setIsLoading(true);
     try {
       await login(email, password);
+      if (!isMusicPlaying()) {
+        startMusic();
+      }
       onNavigate('childSelect');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
@@ -55,6 +59,9 @@ function LandingPage({ onNavigate }: LandingPageProps): React.ReactElement {
     setIsLoading(true);
     try {
       await signup(email, password, parentName);
+      if (!isMusicPlaying()) {
+        startMusic();
+      }
       onNavigate('childSelect');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Signup failed');

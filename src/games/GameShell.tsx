@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NeonButton from '../components/NeonButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles from './GameShell.module.css';
+import { lowerMusicForGame, restoreMusicVolume } from '../lib/music';
 
 interface GameShellProps {
   children: React.ReactNode;
@@ -16,6 +17,13 @@ interface GameShellProps {
  */
 function GameShell({ children, title, instruction, onBack, progress }: GameShellProps): React.ReactElement {
   const { t } = useLanguage();
+
+  useEffect(() => {
+    lowerMusicForGame();
+    return () => {
+      restoreMusicVolume();
+    };
+  }, []);
 
   return (
     <div className={styles.shell}>

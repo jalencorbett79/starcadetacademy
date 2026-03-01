@@ -6,6 +6,7 @@ import ChildSelectPage from './pages/ChildSelectPage';
 import MissionsPage from './pages/MissionsPage';
 import ProfilePage from './pages/ProfilePage';
 import DashboardPage from './pages/DashboardPage';
+import MusicToggle from './components/MusicToggle';
 
 type Page = 'landing' | 'childSelect' | 'missions' | 'profile' | 'dashboard' | 'home';
 
@@ -65,6 +66,7 @@ function App(): React.ReactElement {
     <LanguageProvider>
       <AuthProvider>
         <AppContent />
+        <MusicToggle />
       </AuthProvider>
     </LanguageProvider>
   );
