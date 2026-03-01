@@ -16,7 +16,7 @@
 
 .title {
   font-family: 'Press Start 2P', 'Courier New', monospace;
-  font-size: clamp(0.6rem, 2vw, 0.85rem);
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
   color: #fff;
   margin: 0;
   flex: 1;
@@ -59,7 +59,7 @@
   border-radius: 12px;
   color: #00d4ff;
   font-family: 'Courier New', monospace;
-  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
   margin-bottom: 24px;
 }
 

@@ -5,6 +5,7 @@ import NeonButton from '../components/NeonButton';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './Games.module.css';
+import { playCorrect, playIncorrect, playLetterPlace } from '../lib/sounds';
 
 interface CVCBuildGameProps {
   onBack: () => void;
@@ -83,12 +84,19 @@ function CVCBuildGame({ onBack }: CVCBuildGameProps): React.ReactElement {
       newAvailable.splice(index, 1);
       setAvailableLetters(newAvailable);
 
+      playLetterPlace();
+
       // Check if word is complete
       if (newBuilt.length === round.letters.length) {
         const correct = newBuilt.join('') === round.word;
         setIsCorrect(correct);
         setShowResult(true);
-        if (correct) setScore((s) => s + 1);
+        if (correct) {
+          playCorrect();
+          setScore((s) => s + 1);
+        } else {
+          playIncorrect();
+        }
 
         setTimeout(() => {
           if (currentRound + 1 >= TOTAL_ROUNDS) {
