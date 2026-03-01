@@ -42,10 +42,20 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     headers,
   });
 
-  const data = await res.json();
+  let data: unknown;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error(
+      res.ok
+        ? 'Invalid server response'
+        : `A server error occurred (${res.status})`
+    );
+  }
 
   if (!res.ok) {
-    throw new Error(data.error || `Request failed: ${res.status}`);
+    const errorBody = data as { error?: string };
+    throw new Error(errorBody.error || `Request failed: ${res.status}`);
   }
 
   return data as T;
