@@ -350,40 +350,58 @@ export function AuthProvider({
     [user]
   );
 
+  // Helper: apply a child update using functional state updates so that
+  // sequential calls (e.g. updateChildXP + updateChildSkill + addActivityEntry)
+  // compose correctly instead of overwriting each other's changes.
+  const applyChildUpdate = useCallback(
+    (childId: string, updater: (child: ChildProfile) => ChildProfile) => {
+      setUser((prevUser) => {
+        if (!prevUser) return prevUser;
+        const updatedChildren = prevUser.children.map((c) =>
+          c.id === childId ? updater(c) : c
+        );
+        const updated = { ...prevUser, children: updatedChildren };
+        localStorage.setItem("starCadetUser", JSON.stringify(updated));
+        // Sync to users array in local mode
+        if (!isBackendEnabled) {
+          const stored = localStorage.getItem("starCadetUsers");
+          const users: ParentUser[] = stored ? JSON.parse(stored) : [];
+          const idx = users.findIndex((u) => u.id === prevUser.id);
+          if (idx !== -1) {
+            users[idx] = updated;
+            localStorage.setItem("starCadetUsers", JSON.stringify(users));
+          }
+        }
+        return updated;
+      });
+      setActiveChildState((prevChild) => {
+        if (!prevChild || prevChild.id !== childId) return prevChild;
+        return updater(prevChild);
+      });
+    },
+    []
+  );
+
   // ========================
   // UPDATE XP
   // ========================
   const updateChildXP = useCallback(
     (xpToAdd: number) => {
-      if (!user || !activeChild) return;
-      const newXP = activeChild.xp + xpToAdd;
-      const newLevel = getLevelFromXP(newXP);
-      const newRank = getRankFromLevel(newLevel);
-      const updatedChild: ChildProfile = {
-        ...activeChild,
-        xp: newXP,
-        level: newLevel,
-        rank: newRank,
-        missionsCompleted: activeChild.missionsCompleted + 1,
-      };
-      const updatedChildren = user.children.map((c) =>
-        c.id === activeChild.id ? updatedChild : c
-      );
-      const updated = { ...user, children: updatedChildren };
-      persistUser(updated);
-      setActiveChildState(updatedChild);
-      // Sync to users array
-      if (!isBackendEnabled) {
-        const stored = localStorage.getItem("starCadetUsers");
-        const users: ParentUser[] = stored ? JSON.parse(stored) : [];
-        const idx = users.findIndex((u) => u.id === user.id);
-        if (idx !== -1) {
-          users[idx] = updated;
-          localStorage.setItem("starCadetUsers", JSON.stringify(users));
-        }
-      }
+      if (!activeChild) return;
+      applyChildUpdate(activeChild.id, (child) => {
+        const newXP = child.xp + xpToAdd;
+        const newLevel = getLevelFromXP(newXP);
+        const newRank = getRankFromLevel(newLevel);
+        return {
+          ...child,
+          xp: newXP,
+          level: newLevel,
+          rank: newRank,
+          missionsCompleted: child.missionsCompleted + 1,
+        };
+      });
     },
-    [user, activeChild, persistUser]
+    [activeChild, applyChildUpdate]
   );
 
   // ========================
@@ -391,7 +409,7 @@ export function AuthProvider({
   // ========================
   const addActivityEntry = useCallback(
     (entry: Omit<ActivityEntry, "id" | "date">) => {
-      if (!user || !activeChild) return;
+      if (!activeChild) return;
 
       // Fire-and-forget API call if backend is enabled
       if (isBackendEnabled) {
@@ -405,23 +423,19 @@ export function AuthProvider({
         apiLogActivity(activeChild.id, apiEntry).catch(console.error);
       }
 
-      const newEntry: ActivityEntry = {
-        ...entry,
-        id: generateId(),
-        date: new Date().toISOString(),
-      };
-      const updatedChild: ChildProfile = {
-        ...activeChild,
-        activityLog: [...activeChild.activityLog, newEntry],
-      };
-      const updatedChildren = user.children.map((c) =>
-        c.id === activeChild.id ? updatedChild : c
-      );
-      const updated = { ...user, children: updatedChildren };
-      persistUser(updated);
-      setActiveChildState(updatedChild);
+      applyChildUpdate(activeChild.id, (child) => {
+        const newEntry: ActivityEntry = {
+          ...entry,
+          id: generateId(),
+          date: new Date().toISOString(),
+        };
+        return {
+          ...child,
+          activityLog: [...child.activityLog, newEntry],
+        };
+      });
     },
-    [user, activeChild, persistUser]
+    [activeChild, applyChildUpdate]
   );
 
   // ========================
@@ -429,22 +443,16 @@ export function AuthProvider({
   // ========================
   const updateChildSkill = useCallback(
     (skill: keyof ChildProfile["skills"], value: number) => {
-      if (!user || !activeChild) return;
-      const updatedChild: ChildProfile = {
-        ...activeChild,
+      if (!activeChild) return;
+      applyChildUpdate(activeChild.id, (child) => ({
+        ...child,
         skills: {
-          ...activeChild.skills,
-          [skill]: Math.min(100, activeChild.skills[skill] + value),
+          ...child.skills,
+          [skill]: Math.min(100, child.skills[skill] + value),
         },
-      };
-      const updatedChildren = user.children.map((c) =>
-        c.id === activeChild.id ? updatedChild : c
-      );
-      const updated = { ...user, children: updatedChildren };
-      persistUser(updated);
-      setActiveChildState(updatedChild);
+      }));
     },
-    [user, activeChild, persistUser]
+    [activeChild, applyChildUpdate]
   );
   return (
     <AuthContext.Provider
