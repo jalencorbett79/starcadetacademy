@@ -87,7 +87,7 @@ function SoundMatchGame({ onBack }: SoundMatchGameProps): React.ReactElement {
     speakLetterSound(round.target.letter, round.target.example, language === 'es' ? 'es' : 'en');
   }, [round, language]);
 
-  // Auto-play the letter sound when a new round starts
+  // Auto-play the letter sound when the round or language changes
   useEffect(() => {
     handleSpeak();
   }, [handleSpeak]);

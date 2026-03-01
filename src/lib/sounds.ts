@@ -94,7 +94,7 @@ export function speakLetterSound(letter: string, example: string, lang: 'en' | '
     letterUtterance.volume = 1;
     window.speechSynthesis.speak(letterUtterance);
 
-    // Extract the word from the example (strip emoji)
+    // Extract the word from the example (strip emoji and special characters, preserve letters with diacriticals)
     const word = example.replace(/[^\p{L}\p{M}\s]/gu, '').trim();
     if (word) {
       const wordUtterance = new SpeechSynthesisUtterance(word);
