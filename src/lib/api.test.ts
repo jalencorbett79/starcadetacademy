@@ -17,12 +17,12 @@ const { apiSignup, apiLogin } = await import('./api');
 describe('API client – non-JSON response handling', () => {
   const fetchSpy = vi.spyOn(globalThis, 'fetch');
 
-  afterEach(() => {
-    fetchSpy.mockReset();
-  });
-
   beforeEach(() => {
     storage.clear();
+  });
+
+  afterEach(() => {
+    fetchSpy.mockReset();
   });
 
   it('throws a readable error when the server returns non-JSON on a 500', async () => {
