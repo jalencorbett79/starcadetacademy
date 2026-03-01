@@ -270,8 +270,6 @@ export function AuthProvider({
   // ========================
   const addChild = useCallback(
     async (name: string, age: 3 | 4 | 5) => {
-      if (!user) return;
-
       if (isBackendEnabled) {
         const apiChild = await apiCreateChild(name, age);
         const newChild: ChildProfile = {
@@ -295,44 +293,52 @@ export function AuthProvider({
           },
           activityLog: [],
         };
-        const updated = { ...user, children: [...user.children, newChild] };
-        persistUser(updated);
+        setUser((prev) => {
+          if (!prev) return prev;
+          const updated = { ...prev, children: [...prev.children, newChild] };
+          localStorage.setItem("starCadetUser", JSON.stringify(updated));
+          return updated;
+        });
       } else {
-        const newChild: ChildProfile = {
-          id: generateId(),
-          name,
-          age,
-          avatarColor:
-            AVATAR_COLORS[user.children.length % AVATAR_COLORS.length],
-          xp: 0,
-          level: 1,
-          rank: "beginnerExplorer",
-          language: "en",
-          streakDays: 0,
-          missionsCompleted: 0,
-          badges: [],
-          skills: {
-            letterRecognition: 0,
-            phonics: 0,
-            sightWords: 0,
-            counting: 0,
-            addition: 0,
-          },
-          activityLog: [],
-        };
-        const updated = { ...user, children: [...user.children, newChild] };
-        persistUser(updated);
-        // Also update in users array
-        const stored = localStorage.getItem("starCadetUsers");
-        const users: ParentUser[] = stored ? JSON.parse(stored) : [];
-        const idx = users.findIndex((u) => u.id === user.id);
-        if (idx !== -1) {
-          users[idx] = updated;
-          localStorage.setItem("starCadetUsers", JSON.stringify(users));
-        }
+        setUser((prev) => {
+          if (!prev) return prev;
+          const newChild: ChildProfile = {
+            id: generateId(),
+            name,
+            age,
+            avatarColor:
+              AVATAR_COLORS[prev.children.length % AVATAR_COLORS.length],
+            xp: 0,
+            level: 1,
+            rank: "beginnerExplorer",
+            language: "en",
+            streakDays: 0,
+            missionsCompleted: 0,
+            badges: [],
+            skills: {
+              letterRecognition: 0,
+              phonics: 0,
+              sightWords: 0,
+              counting: 0,
+              addition: 0,
+            },
+            activityLog: [],
+          };
+          const updated = { ...prev, children: [...prev.children, newChild] };
+          localStorage.setItem("starCadetUser", JSON.stringify(updated));
+          // Also update in users array
+          const stored = localStorage.getItem("starCadetUsers");
+          const users: ParentUser[] = stored ? JSON.parse(stored) : [];
+          const idx = users.findIndex((u) => u.id === prev.id);
+          if (idx !== -1) {
+            users[idx] = updated;
+            localStorage.setItem("starCadetUsers", JSON.stringify(users));
+          }
+          return updated;
+        });
       }
     },
-    [user, persistUser]
+    []
   );
 
   // ========================
