@@ -58,7 +58,7 @@
   border: 1px solid rgba(0, 212, 255, 0.2);
   border-radius: 12px;
   color: #00d4ff;
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', 'Consolas', monospace;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   margin-bottom: 24px;
 }

@@ -8,7 +8,7 @@
   background: rgba(0, 0, 20, 0.6);
   color: #00d4ff;
   cursor: pointer;
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: 'Courier New', 'Consolas', monospace;
   font-size: 0.6rem;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);

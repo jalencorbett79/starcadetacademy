@@ -61,7 +61,7 @@
   border: none;
   color: #8892b0;
   cursor: pointer;
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', 'Consolas', monospace;
   font-size: 0.8rem;
   padding: 6px 12px;
   border-radius: 6px;
@@ -84,7 +84,7 @@
   border: 1px solid rgba(255, 64, 129, 0.4);
   color: #ff4081;
   cursor: pointer;
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', 'Consolas', monospace;
   font-size: 0.7rem;
   padding: 6px 12px;
   border-radius: 6px;
