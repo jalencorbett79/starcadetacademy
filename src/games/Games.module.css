@@ -18,13 +18,14 @@
 }
 
 .soundHint {
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', 'Consolas', monospace;
   font-size: clamp(2rem, 7vw, 4rem);
   color: #00d4ff;
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .exampleHint {
+  font-family: 'Courier New', 'Consolas', monospace;
   font-size: 1.8rem;
   color: #8892b0;
 }
