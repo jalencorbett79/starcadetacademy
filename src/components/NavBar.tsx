@@ -11,7 +11,7 @@ interface NavBarProps {
 
 function NavBar({ currentPage, onNavigate }: NavBarProps): React.ReactElement {
   const { t } = useLanguage();
-  const { isAuthenticated, logout, activeChild } = useAuth();
+  const { activeChild } = useAuth();
 
   return (
     <nav className={styles.nav}>
@@ -23,7 +23,7 @@ function NavBar({ currentPage, onNavigate }: NavBarProps): React.ReactElement {
       </div>
 
       <div className={styles.center}>
-        {isAuthenticated && activeChild && (
+        {activeChild && (
           <>
             <button
               className={`${styles.navLink} ${currentPage === 'missions' ? styles.active : ''}`}
@@ -49,11 +49,6 @@ function NavBar({ currentPage, onNavigate }: NavBarProps): React.ReactElement {
 
       <div className={styles.right}>
         <LanguageToggle />
-        {isAuthenticated && (
-          <button className={styles.logoutBtn} onClick={logout}>
-            {t('nav.logout')}
-          </button>
-        )}
       </div>
     </nav>
   );
