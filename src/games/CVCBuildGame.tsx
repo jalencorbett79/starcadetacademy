@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import GameShell from './GameShell';
 import LaserCelebration from '../components/LaserCelebration';
 import NeonButton from '../components/NeonButton';
@@ -31,7 +31,7 @@ const CVC_WORDS_ES = [
   { word: 'PEZ', emoji: '🐟', letters: ['P', 'E', 'Z'] },
   { word: 'SAL', emoji: '🧂', letters: ['S', 'A', 'L'] },
   { word: 'MES', emoji: '📅', letters: ['M', 'E', 'S'] },
-  { word: 'RED', emoji: '🔴', letters: ['R', 'E', 'D'] },
+  { word: 'RED', emoji: '🕸️', letters: ['R', 'E', 'D'] },
 ];
 
 const TOTAL_ROUNDS = 5;
@@ -52,9 +52,7 @@ function CVCBuildGame({ onBack }: CVCBuildGameProps): React.ReactElement {
 
   const wordList = language === 'es' ? CVC_WORDS_ES : CVC_WORDS_EN;
 
-  const rounds = useMemo(() => {
-    return shuffle(wordList).slice(0, TOTAL_ROUNDS);
-  }, [wordList]);
+  const [rounds] = useState(() => shuffle(wordList).slice(0, TOTAL_ROUNDS));
 
   const [currentRound, setCurrentRound] = useState(0);
   const [score, setScore] = useState(0);

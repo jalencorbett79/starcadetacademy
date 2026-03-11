@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import GameShell from './GameShell';
 import LaserCelebration from '../components/LaserCelebration';
 import NeonButton from '../components/NeonButton';
@@ -40,7 +40,7 @@ function LetterMatchGame({ onBack }: LetterMatchGameProps): React.ReactElement {
   const { t } = useLanguage();
   const { updateChildXP, addActivityEntry, updateChildSkill } = useAuth();
 
-  const rounds = useMemo(() => Array.from({ length: TOTAL_ROUNDS }, () => generateRound()), []);
+  const [rounds] = useState(() => Array.from({ length: TOTAL_ROUNDS }, () => generateRound()));
 
   const [currentRound, setCurrentRound] = useState(0);
   const [score, setScore] = useState(0);

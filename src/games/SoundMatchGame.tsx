@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import GameShell from './GameShell';
 import LaserCelebration from '../components/LaserCelebration';
 import NeonButton from '../components/NeonButton';
@@ -61,7 +61,7 @@ function SoundMatchGame({ onBack }: SoundMatchGameProps): React.ReactElement {
 
   const phonics = language === 'es' ? PHONICS_ES : PHONICS_EN;
 
-  const rounds = useMemo(() => {
+  const [rounds] = useState(() => {
     const shuffled = shuffle(phonics);
     return shuffled.slice(0, TOTAL_ROUNDS).map((target) => {
       let options = [target];
@@ -70,7 +70,7 @@ function SoundMatchGame({ onBack }: SoundMatchGameProps): React.ReactElement {
       options = [...options, ...shuffledOthers.slice(0, 3)];
       return { target, options: shuffle(options) };
     });
-  }, [phonics]);
+  });
 
   const [currentRound, setCurrentRound] = useState(0);
   const [score, setScore] = useState(0);
